@@ -1,0 +1,29 @@
+Impresora A(uso):
+Nombre	    Tipo de dato	Cte/Variable	Rango de valores posibles	f(c)
+capacidadToner	double	    constante	            1000.0                --
+%Toner      	double	    variable	            0 .. 100	    imprimir, recargar, revisar
+hojasDisponibles  int	    variable	        0 .. 50	imprimir, recargarHojas
+encendida	       bool 	variable	true / false	encender, apagar
+
+Comportamiento:
+
+Nombre	    Parámetros / Tipo                   Retorno / Tipo
+imprimir	documento:string,cantHojas:int	    bool 
+encender	    --	                            --
+apagar      	--	                            --
+recargarToner	value:double           	--
+recargarHojas	cantidad:int                	--
+
+Impresora B(comercial):
+
+Nombre	    Tipo de dato	Cte/Variable	Rango de valores posibles	f(c)
+nombreComercial	string	    constante	      	--  
+precio	        double	    variable	        > 0	                 
+enStock     	bool	    variable	    true / false	        
+cantidad        int	        variable	        0 .. 1000	            
+velocidadImpresion	int	    constante	    10 .. 40 (ppm)          	--
+garantiaMeses	int     	constante	        6 .. 36	                --
+
+Comportamiento: 
+Nombre	    Parámetros / Tipo                   Retorno / Tipo
+MostrarInfo	      --	                            --
