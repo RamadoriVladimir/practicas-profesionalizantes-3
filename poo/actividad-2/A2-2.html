@@ -1,0 +1,90 @@
+<!--
+Nombre	    Tipo de dato	Cte/Variable	Rango de valores posibles	f(c)
+velocidadActual	int	        variable	        0, ... 3	    encender, cambiarVelocidad
+oscilando	    bool	    variable	        true / false	activarOscilacion, detenerOscilacion
+altura	    double	        variable        	0.5 .. 2.0 (m)	        ajustarAltura
+encendido	    bool	    variable	        true / false	        encender, apagar
+
+Comportamiento:
+Nombre	        Parámetros / Tipo            Retorno / Tipo
+encender        	--                      	--
+apagar	            --	                        --
+cambiarVelocidad	nuevaVelocidad: int        	--
+activarOscilacion	--	                        --
+detenerOscilacion	--                         	--
+ajustarAltura	    nuevaAltura: double	        --
+
+-->
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Ventilador</title>
+  <style>
+  </style>
+</head>
+<body>
+  <script type="text/javascript">
+    class Ventilador {
+            constructor() {
+                this.altura = 1.2;
+                this.velocidadActual = 0; 
+                this.oscilando = false;
+                this.encendido = false;
+            }
+
+            encender() {
+                this.encendido = true;
+                this.velocidadActual = 1; 
+                console.log("Ventilador encendido.");
+            }
+
+            apagar() {
+                this.encendido = false;
+                this.velocidadActual = 0;
+                this.oscilando = false;
+                console.log("Ventilador apagado.");
+            }
+
+            cambiarVelocidad(nuevaVelocidad) {
+                if (!this.encendido) {
+                    console.log("No se puede cambiar velocidad: ventilador apagado.");
+                } else if (!Number.isInteger(nuevaVelocidad)) {
+                    console.log("Error: la velocidad debe ser un número entero.");
+                } else if (nuevaVelocidad < 1 || nuevaVelocidad > 3) {
+                    console.log("Velocidad inválida. Debe estar entre 1 y 3.");
+                } else {
+                    this.velocidadActual = nuevaVelocidad;
+                    console.log(`Velocidad cambiada a ${nuevaVelocidad}.`);
+                }
+            }
+
+            activarOscilacion() {
+                if (this.encendido) {
+                    this.oscilando = true;
+                    console.log("Oscilación activada.");
+                } else {
+                    console.log("No se puede activar oscilación: ventilador apagado.");
+                }
+            }
+
+            detenerOscilacion() {
+                this.oscilando = false;
+                console.log("Oscilación desactivada.");
+            }
+
+            ajustarAltura(nuevaAltura) {
+                if (nuevaAltura >= 0.5 && nuevaAltura <= 2.0) {
+                    this.altura = nuevaAltura;
+                    console.log(`Altura ajustada a ${nuevaAltura} metros.`);
+                } else {
+                    console.log("Altura fuera de rango (0.5 a 2.0 m).");
+                }
+            }
+        }
+
+        const ventilador = new Ventilador();
+  </script>
+</body>
+</html>
