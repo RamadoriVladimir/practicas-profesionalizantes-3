@@ -48,38 +48,50 @@
   </div>
 
   <script type="text/javascript">
-    class Semaforo {
+  class Semaforo {
   constructor() {
-    this.estado = 0; 
-    this.LuzRoja = false;
-    this.LuzAmarilla = false;  
-    this.LuzVerde = false; 
+    this.luzActiva = 0;
   }
 
   _actualizarGUI() {
-    this.LuzRoja = this.estado === 0;
-    this.LuzAmarilla = this.estado === 1;
-    this.LuzVerde = this.estado === 2;
+    const roja = document.getElementById("roja");
+    const amarilla = document.getElementById("amarilla");
+    const verde = document.getElementById("verde");
 
-    document.getElementById("roja").classList.toggle("encendida", this.LuzRoja);
-    document.getElementById("amarilla").classList.toggle("encendida", this.LuzAmarilla);
-    document.getElementById("verde").classList.toggle("encendida", this.LuzVerde);
+    roja.classList.remove("encendida");
+    amarilla.classList.remove("encendida");
+    verde.classList.remove("encendida");
+
+    switch (this.luzActiva) {
+      case 0:
+        roja.classList.add("encendida");
+        break;
+      case 1:
+        amarilla.classList.add("encendida");
+        break;
+      case 2:
+        verde.classList.add("encendida");
+        break;
+      case 3:
+        amarilla.classList.add("encendida");
+        break;
+    }
   }
 
   _estadoLuz() {
-    switch (this.estado) {
+    switch (this.luzActiva) {
       case 0: return 4000; 
-      case 1: return 1500; 
+      case 1: return 1500;
       case 2: return 4000; 
+      case 3: return 1500; 
     }
   }
 
   iniciarCiclo() {
-    
     const cambiarLuz = () => {
       this._actualizarGUI();
       setTimeout(() => {
-        this.estado = (this.estado + 1) % 3;
+        this.luzActiva = (this.luzActiva + 1) % 4;
         cambiarLuz();
       }, this._estadoLuz());
     };
