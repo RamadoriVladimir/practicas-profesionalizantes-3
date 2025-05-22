@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Rectangulo</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+            background-color: #f0f0f0;
+            font-family: Arial, sans-serif;
+        }
+        canvas {
+            border: 2px solid black;
+            background-color: white;
+            box-shadow: 0 0 10px rgba(0,0,0,0.2);
+        }
+        .instructions {
+            position: absolute;
+            bottom: 20px;
+            text-align: center;
+            width: 100%;
+            background-color: rgba(255,255,255,0.8);
+            padding: 10px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="instructions">
+        <p>Usa las flechas del teclado para controlar el rectangulo:</p>
+        <p>↑ Avance | ↓ Retroceso | ← Girar izquierda | → Girar Derecha</p>
+    </div>
+    <script>
+        class Rectangle {
+            constructor(x, y, width = 60, height = 30, color = 'blue') {
+                this.x = x;
+                this.y = y;
+                this.width = width; 
+                this.height = height;
+                this.angle = 0;     
+                this.color = color;
+                this.speed = 3;     
+                this.rotationSpeed = 0.05; 
+                this.moving = false;
+                this.boundaryOffset = width / 2;
+            }
+
+            draw(ctx) {
+                ctx.save();
+                ctx.translate(this.x, this.y);
+                ctx.rotate(this.angle);
+                ctx.fillStyle = this.color;
+                ctx.fillRect(-this.width/2, -this.height/2, this.width, this.height);
+                
+                ctx.restore();
+            }
+
+            moveForward(canvasWidth, canvasHeight) {
+                const dx = Math.cos(this.angle) * this.speed;
+                const dy = Math.sin(this.angle) * this.speed;
+                
+                const newX = this.x + dx;
+                const newY = this.y + dy;
+                
+                if (newX > this.boundaryOffset && newX < canvasWidth - this.boundaryOffset) {
+                    this.x = newX;
+                }
+                
+                if (newY > this.boundaryOffset && newY < canvasHeight - this.boundaryOffset) {
+                    this.y = newY;
+                }
+                
+                this.moving = true;
+            }
+
+            moveBackwards(canvasWidth, canvasHeight) {
+                const dx = Math.cos(this.angle) * this.speed;
+                const dy = Math.sin(this.angle) * this.speed;
+            
+                const newX = this.x - dx;
+                const newY = this.y - dy;
+                
+                if (newX > this.boundaryOffset && newX < canvasWidth - this.boundaryOffset) {
+                    this.x = newX;
+                }
+                
+                if (newY > this.boundaryOffset && newY < canvasHeight - this.boundaryOffset) {
+                    this.y = newY;
+                }
+                
+                this.moving = true;
+            }
+
+            rotateLeft() {
+                this.angle -= this.rotationSpeed;
+                this.moving = true;
+            }
+
+            rotateRight() {
+                this.angle += this.rotationSpeed;
+                this.moving = true;
+            }
+
+            stop() {
+                this.moving = false;
+            }
+        }
+
+        class RectangleController {
+            constructor(rectangle, canvas) {
+                this.rectangle = rectangle;
+                this.canvas = canvas;
+                this.ctx = canvas.getContext('2d');
+                this.activeKeys = new Set();
+                
+                this.configEvents();
+                this.start();
+            }
+
+            configEvents() {
+                window.addEventListener('keydown', (event) => {
+                    if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', ' '].includes(event.key)) {
+                        event.preventDefault();
+                    }
+                    
+                    this.activeKeys.add(event.key);
+                });
+
+                window.addEventListener('keyup', (event) => {
+                    this.activeKeys.delete(event.key);
+                    
+                    if (!['ArrowUp', 'ArrowDown'].some(key => this.activeKeys.has(key))) {
+                        this.rectangle.stop();
+                    }
+                });
+
+                window.addEventListener('blur', () => {
+                    this.activeKeys.clear();
+                    this.rectangle.stop();
+                });
+            }
+
+            update() {
+                this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+                
+                if (this.activeKeys.has('ArrowUp')) this.rectangle.moveForward(this.canvas.width, this.canvas.height);
+                if (this.activeKeys.has('ArrowDown')) this.rectangle.moveBackwards(this.canvas.width, this.canvas.height);
+                if (this.activeKeys.has('ArrowLeft')) this.rectangle.rotateLeft();
+                if (this.activeKeys.has('ArrowRight')) this.rectangle.rotateRight();
+                
+                this.rectangle.draw(this.ctx);
+            }
+
+            start() {
+                const animate = () => {
+                    this.update();
+                    requestAnimationFrame(animate);
+                };
+                animate();
+            }
+        }
+
+        function main()
+        {
+            const canvas = document.createElement('canvas');
+            canvas.width = 800;
+            canvas.height = 500;
+            document.body.insertBefore(canvas, document.body.firstChild);
+            
+            const myRectangle = new Rectangle(
+                canvas.width / 2,
+                canvas.height / 2
+            );
+            
+            let rectangleController = new RectangleController(myRectangle, canvas);
+        }
+
+        window.onload = main;
+    </script>
+</body>
+</html>
