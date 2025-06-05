@@ -78,9 +78,7 @@ class GameEngineRenderer {
                 row.classList.add('selected');
             }
             
-            row.onclick = () => {
-                this.selectFigure(id);
-            };
+            row.onclick = this.handleRowClick.bind(this, id);
             
             const typeCell = document.createElement('td');
             typeCell.textContent = figure.constructor.name;
@@ -92,6 +90,10 @@ class GameEngineRenderer {
             row.appendChild(idCell);
             tableBody.appendChild(row);
         });
+    }
+
+    handleRowClick(id) {
+        this.selectFigure(id);
     }
 
     selectFigure(id) {
@@ -123,12 +125,13 @@ class GameEngineRenderer {
         }
     }
 
+    gameLoop() {
+        this.render();
+        requestAnimationFrame(this.gameLoop.bind(this));
+    }
+
     start() {
-        const gameLoop = () => {
-            this.render();
-            requestAnimationFrame(gameLoop);
-        };
-        gameLoop();
+        this.gameLoop();
     }
 
     showError(message) {
@@ -179,24 +182,44 @@ class GameEngineRenderer {
         }
     }
 
+    handleCreateRectangle() {
+        this.createFigure('rectangle');
+    }
+
+    handleCreateCircle() {
+        this.createFigure('circle');
+    }
+
+    handleCreateTriangle() {
+        this.createFigure('triangle');
+    }
+
+    handleDelete() {
+        this.removeObject();
+    }
+
     setupEventListeners() {
         this.colorInput.addEventListener('input', this.handleColorInput.bind(this));
         
-        document.getElementById('btnRectangle').addEventListener('click', () => {
-            this.createFigure('rectangle');
-        });
+        document.getElementById('btnRectangle').addEventListener(
+            'click', 
+            this.handleCreateRectangle.bind(this)
+        );
         
-        document.getElementById('btnCircle').addEventListener('click', () => {
-            this.createFigure('circle');
-        });
+        document.getElementById('btnCircle').addEventListener(
+            'click', 
+            this.handleCreateCircle.bind(this)
+        );
         
-        document.getElementById('btnTriangle').addEventListener('click', () => {
-            this.createFigure('triangle');
-        });
+        document.getElementById('btnTriangle').addEventListener(
+            'click', 
+            this.handleCreateTriangle.bind(this)
+        );
 
-        document.getElementById('btnDelete').addEventListener('click', () => {
-        this.removeObject();
-        });
+        document.getElementById('btnDelete').addEventListener(
+            'click', 
+            this.handleDelete.bind(this)
+        );
     }
 }
 
