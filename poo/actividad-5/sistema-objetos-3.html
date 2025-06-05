@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Figuras</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            height: 100vh;
+            margin: 0;
+            padding: 20px;
+            background-color: #f0f0f0;
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            display: flex;
+            gap: 20px;
+        }
+        canvas {
+            border: 2px solid black;
+            background-color: white;
+            box-shadow: 0 0 10px rgba(0,0,0,0.2);
+        }
+        .controls {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            width: 250px;
+        }
+        .figure-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            margin-bottom: 15px;
+        }
+        button {
+            padding: 8px;
+            cursor: pointer;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        tr.selected {
+            background-color: #d4edff;
+            font-weight: bold;
+        }
+        .error {
+            color: red;
+            margin-top: 10px;
+        }
+        .color-picker {
+            margin: 10px 0;
+        }
+        .status-bar {
+            margin-top: 15px;
+            padding: 8px;
+            background-color: #e9e9e9;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div>
+            <canvas id="gameCanvas"></canvas>
+        </div>
+        <div class="controls">
+            <div class="figure-buttons">
+                <button id="btnRectangle">Crear Rectángulo</button>
+                <button id="btnCircle">Crear Círculo</button>
+                <button id="btnTriangle">Crear Triángulo</button>
+                <button id="btnDelete">Borrar Figura Seleccionada</button>
+            </div>
+            
+            <div class="color-picker">
+                <label for="colorInput">Color de la figura:</label>
+                <input type="color" id="colorInput" value="#3498db">
+            </div>
+            
+            <div>
+                <h3>Figuras creadas:</h3>
+                <table id="figuresTable">
+                    <thead>
+                        <tr>
+                            <th>Tipo</th>
+                            <th>ID</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+            
+            <div class="status-bar" id="statusBar">
+                Ninguna figura seleccionada
+            </div>
+            
+            <div id="errorMessage" class="error"></div>
+        </div>
+    </div>
+
+    <script type="module">
+    import { GameEngineRenderer } from './GameEngineRenderer.js';
+    
+    function main() {
+        const canvas = document.getElementById('gameCanvas');
+        canvas.width = 800;
+        canvas.height = 500;
+        
+        const renderer = new GameEngineRenderer(canvas);
+        renderer.start();
+    }
+
+    window.onload = main;
+</script>
+</body>
+</html>
