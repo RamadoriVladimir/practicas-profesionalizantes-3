@@ -1,0 +1,27 @@
+Helicoptero:
+
+Nombre	    Tipo de dato	Cte/Variable	Rango de valores posibles	f(c)
+armor           int           variable          0 .. 600                  recibirDaño, reparar
+fuel            int           variable          0 .. 100                  volar, recargarCombustible
+guns            int           variable          0 .. 1200                 dispararBalas
+missiles        int           variable          0 .. 10                   dispararMisiles
+hydraRockets    int           variable          0 .. 40                   dispararHydras
+xPosition       int           variable          --                        mover
+yPosition       int           variable          --                        mover
+velocityX       int           variable          --                        mover
+velocityY       int           variable          --                        mover
+encendido       bool          variable          true / false              despegar,
+
+Comportamiento:
+Nombre	        Parametros / Tipo            Retorno / Tipo
+despegar        --                                      --
+mover           direccion:string                        -- 
+dispararBalas   cantidad:int                            -- 
+dispararMisiles cantidad:int                            -- 
+dispararHydraRockets cantidad:int                       -- 
+recargarCombustible cantidad:int                        -- 
+recargarBalas    cantidad:int                           -- 
+recargarMisiles  cantidad:int                           -- 
+recargarHydraRockets cantidad:int                       -- 
+recibirDaño      cantidad:int                           -- 
+reparar          cantidad:int                           -- 

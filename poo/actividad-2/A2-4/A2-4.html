@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <script type="text/javascript">
+        class Helicoptero {
+            constructor() {
+                this.armor = 600; 
+                this.fuel = 100; 
+                this.guns = 1200; 
+                this.missiles = 10;
+                this.hydraRockets = 40; 
+                this.xPosition = 0; 
+                this.yPosition = 0; 
+                this.velocityX = 0;
+                this.velocityY = 0; 
+                this.encendido = false; 
+            }
+
+            despegar() {
+                if (this.fuel > 0) {
+                    this.encendido = true;
+                    console.log("Despegue exitoso.");
+                } else {
+                    console.log("No hay suficiente combustible para despegar.");
+                }
+            }
+
+            aterrizar() {
+                this.encendido = false;
+                this.velocityX = 0;
+                this.velocityY = 0;
+                console.log("Helicoptero aterrizando");
+            }
+
+            mover(direccion) {
+                if (!this.encendido) {
+                    console.log("El helicoptero no esta encendido.");
+                    return;
+                }
+                switch(direccion) {
+                    case 'arriba':
+                        this.yPosition += 1;
+                        break;
+                    case 'abajo':
+                        this.yPosition -= 1;
+                        break;
+                    case 'izquierda':
+                        this.xPosition -= 1;
+                        break;
+                    case 'derecha':
+                        this.xPosition += 1;
+                        break;
+                    case 'arriba-izquierda':
+                        this.xPosition -= 1;
+                        this.yPosition += 1;
+                        break;
+                    case 'arriba-derecha':
+                        this.xPosition += 1;
+                        this.yPosition += 1;
+                        break;
+                    case 'abajo-izquierda':
+                        this.xPosition -= 1;
+                        this.yPosition -= 1;
+                        break;
+                    case 'abajo-derecha':
+                        this.xPosition += 1;
+                        this.yPosition -= 1;
+                        break;
+                    default:
+                        console.log("Direccion invalida.");
+                        return;
+                }
+                console.log(`Moviendo a la direccion: ${direccion}. Nueva posicion: (${this.xPosition}, ${this.yPosition})`);
+            }
+
+            dispararBalas(cantidad) {
+                if (this.guns >= cantidad) {
+                    this.guns -= cantidad;
+                    console.log(`Disparando ${cantidad} balas. Municion restante: ${this.guns}`);
+                    return true;
+                } else {
+                    console.log("No hay suficiente municion.");
+                    return false;
+                }
+            }
+
+            dispararMisiles(cantidad) {
+                if (this.missiles >= cantidad) {
+                    this.missiles -= cantidad;
+                    console.log(`Disparando ${cantidad} misiles. Misiles restantes: ${this.missiles}`);
+                    return true;
+                } else {
+                    console.log("No hay suficientes misiles.");
+                    return false;
+                }
+            }
+
+            dispararHydraRockets(cantidad) {
+                if (this.hydraRockets >= cantidad) {
+                    this.hydraRockets -= cantidad;
+                    console.log(`Disparando ${cantidad} Hydra Rockets. Cohetes restantes: ${this.hydraRockets}`);
+                    return true;
+                } else {
+                    console.log("No hay suficientes Hydra Rockets.");
+                    return false;
+                }
+            }
+
+            recargarCombustible(cantidad) {
+                this.fuel += cantidad;
+                if (this.fuel > 100) {
+                    this.fuel = 100;
+                }
+                console.log(`Combustible recargado. Combustible actual: ${this.fuel}`);
+            }
+
+            recargarBalas(cantidad) {
+                this.guns += cantidad;
+                if (this.guns > 1200) {
+                    this.guns = 1200;
+                }
+                console.log(`Balas recargadas. Municion actual: ${this.guns}`);
+            }
+
+            recargarMisiles(cantidad) {
+                this.missiles += cantidad;
+                if (this.missiles > 10) {
+                    this.missiles = 10;
+                }
+                console.log(`Misiles recargados. Misiles actuales: ${this.missiles}`);
+            }
+
+            recargarHydraRockets(cantidad) {
+                this.hydraRockets += cantidad;
+                if (this.hydraRockets > 40) {
+                    this.hydraRockets = 40;
+                }
+                console.log(`Hydra Rockets recargados. Cohetes actuales: ${this.hydraRockets}`);
+            }
+
+            recibirDaño(cantidad) {
+                this.armor -= cantidad;
+                if (this.armor < 0) {
+                    this.armor = 0;
+                }
+                console.log(`Recibiendo ${cantidad} de daño. Armadura restante: ${this.armor}`);
+            }
+
+            reparar(cantidad) {
+                this.armor += cantidad;
+                if (this.armor > 600) {
+                    this.armor = 600;
+                }
+                console.log(`Reparando el helicoptero. Armadura actual: ${this.armor}`);
+            }
+        }
+        const miHelicoptero = new Helicoptero();
+    </script>
+</head>
+<body>
+</body>
+</html>
