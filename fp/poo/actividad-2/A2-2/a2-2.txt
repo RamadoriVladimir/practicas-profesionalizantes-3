@@ -1,0 +1,16 @@
+Ventilador:
+
+Nombre	    Tipo de dato	Cte/Variable	Rango de valores posibles	f(c)
+velocidadActual	int	        variable	        0, ... 3	    encender, cambiarVelocidad
+oscilando	    bool	    variable	        true / false	activarOscilacion, detenerOscilacion
+altura	    double	        variable        	0.5 .. 2.0 (m)	        ajustarAltura
+encendido	    bool	    variable	        true / false	        encender, apagar
+
+Comportamiento:
+Nombre	        Parámetros / Tipo            Retorno / Tipo
+encender        	--                      	--
+apagar	            --	                        --
+cambiarVelocidad	nuevaVelocidad: int        	--
+activarOscilacion	--	                        --
+detenerOscilacion	--                         	--
+ajustarAltura	    nuevaAltura: double	        --

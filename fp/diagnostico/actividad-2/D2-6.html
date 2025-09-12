@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<meta charset="utf-8">
+<head>
+</head>
+<body>
+
+</body>
+
+<script>
+
+let circuito = {
+  entradas: ['A', 'B', 'C'],
+  compuertas: [
+    {
+      id: 'AND1',
+      tipo: 'AND',
+      entradas: ['A', 'B', 'C'],
+      salida: 'salida_AND1'
+    },
+    {
+      id: 'NOT1',
+      tipo: 'NOT',
+      entradas: ['B'],
+      salida: 'salida_NOT1'
+    },
+    {
+      id: 'NOT2',
+      tipo: 'NOT',
+      entradas: ['C'],
+      salida: 'salida_NOT2'
+    },
+    {
+      id: 'OR1',
+      tipo: 'OR',
+      entradas: ['salida_NOT1', 'salida_NOT2'],
+      salida: 'salida_OR1'
+    },
+    {
+      id: 'AND2',
+      tipo: 'AND',
+      entradas: ['A', 'salida_OR1'],
+      salida: 'salida_AND2'
+    },
+    {
+      id: 'OR2',
+      tipo: 'OR',
+      entradas: ['salida_AND1', 'salida_AND2'],
+      salida: 'salida_final'
+    }
+  ],
+  salida: 'salida_final'
+};
+
+</script>
+
+</html>

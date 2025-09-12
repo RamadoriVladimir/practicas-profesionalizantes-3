@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Semáforo</title>
+  <style>
+    body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      font-family: sans-serif;
+    }
+
+    .semaforo {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background-color: #333;
+      padding: 20px;
+      width: 100px;
+      border-radius: 10px;
+      margin-top: 50px;
+    }
+
+    .luz {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      margin: 10px 0;
+      background-color: #111;
+      opacity: 0.2;
+      transition: opacity 0.3s ease;
+    }
+
+    .encendida {
+      opacity: 1 !important;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Semáforo</h2>
+
+  <div class="semaforo">
+    <div id="roja" class="luz" style="background-color: red;"></div>
+    <div id="amarilla" class="luz" style="background-color: yellow;"></div>
+    <div id="verde" class="luz" style="background-color: green;"></div>
+  </div>
+
+  <script type="text/javascript">
+  class Semaforo {
+  constructor() {
+    this.luzActiva = 0;
+  }
+
+  _actualizarGUI() {
+    const roja = document.getElementById("roja");
+    const amarilla = document.getElementById("amarilla");
+    const verde = document.getElementById("verde");
+
+    roja.classList.remove("encendida");
+    amarilla.classList.remove("encendida");
+    verde.classList.remove("encendida");
+
+    switch (this.luzActiva) {
+      case 0:
+        roja.classList.add("encendida");
+        break;
+      case 1:
+        amarilla.classList.add("encendida");
+        break;
+      case 2:
+        verde.classList.add("encendida");
+        break;
+      case 3:
+        amarilla.classList.add("encendida");
+        break;
+    }
+  }
+
+  _estadoLuz() {
+    switch (this.luzActiva) {
+      case 0: return 4000; 
+      case 1: return 1500;
+      case 2: return 4000; 
+      case 3: return 1500; 
+    }
+  }
+
+  iniciarCiclo() {
+    const cambiarLuz = () => {
+      this._actualizarGUI();
+      setTimeout(() => {
+        this.luzActiva = (this.luzActiva + 1) % 4;
+        cambiarLuz();
+      }, this._estadoLuz());
+    };
+    cambiarLuz();
+  }
+}
+
+    const semaforo = new Semaforo();
+    semaforo.iniciarCiclo();
+  </script>
+</body>
+</html>
